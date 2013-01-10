@@ -12,5 +12,6 @@
 //
 //= require jquery
 //= require jquery_ujs
+//= require spectrum
 //= require ext-all
 //= require app

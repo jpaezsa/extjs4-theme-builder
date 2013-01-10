@@ -1,0 +1,9 @@
+<%= form_tag do %>
+    <div>
+      <input class='colorPicker' name="color1" type='text' value="<%= @color1 %>"/>
+      <input class='colorPicker' name="color2" type='text' value="<%= @color2 %>"/>
+    </div>
+    <%= submit_tag("Generate Theme") %>
+
+    <div id="theme-panel"></div>
+<% end %>

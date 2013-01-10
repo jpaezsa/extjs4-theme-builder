@@ -957,7 +957,9 @@ function addFormWindow () {
 function doThemes (rtl) {
     var time = Ext.perf.getTimestamp(),
         maskedPanel,
-        mainContainer;
+        colorPickerPanel,
+        mainContainer,
+        themePanel;
 
     if (hasOption('nocss3')) {
         Ext.supports.CSS3BorderRadius = false;
@@ -985,30 +987,34 @@ function doThemes (rtl) {
     ];
     items.pop(); // remove the 0 on the end
 
-    mainContainer = Ext.create('Ext.container.Container', {
-        id: 'main-container',
-        renderTo: document.body,
+
+    colorPickerPanel = Ext.create('Ext.form.Panel',{
+        height : 100,
+        padding : 10,
+        border : false,
+        items : [{
+          xtype : 'colorpicker'
+        }]
+    });
+
+    themePanel = Ext.create('Ext.panel.Panel',{
+        layout : 'absolute',
+        border : false,
         height: 1460,
         width: 1130,
-        layout: 'absolute',
         items: items
     });
-        
-    addResizer(mainContainer.el);
-    //addFormWindow();
 
-    /**
-     * Stylesheet Switcher
-     */
-    Ext.get('styleswitcher_select').on('change', function(e, select) {
-        var name = select[select.selectedIndex].value,
-            currentPath = window.location.pathname,
-            isCurrent = currentPath.match(name);
-        
-        if (!isCurrent) {
-            window.location = name;
-        }
+    mainContainer = Ext.create('Ext.panel.Panel', {
+
+        id: 'main-container',
+        renderTo: 'theme-panel',
+        border : false,
+        items : [themePanel]
     });
+        
+    addResizer(themePanel.el);
+    //addFormWindow();
 
     setTimeout(function() {
         // we may comment out the creation of this for testing
@@ -1018,7 +1024,7 @@ function doThemes (rtl) {
                 useTargetEl: true
             });
         }
-        
+
         if (!hasOption('notips')) {
             Ext.QuickTips.init();
         }
@@ -1029,6 +1035,11 @@ function doThemes (rtl) {
 }
 
 Ext.onReady(function() {
+
+    $(".colorPicker").spectrum({
+        showButtons : false
+    });
+
     if (!hasOption('perf')) {
         useDeferRender = !hasOption('nodefer');
         if (hasOption('delay')) {

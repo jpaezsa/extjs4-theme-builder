@@ -12,9 +12,6 @@ end
 module ThemeBuilder
   class Application < Rails::Application
 
-    THEME_COLOR1 = "#B6B5C7"
-    THEME_COLOR2 = "#2A284D"
-
     # Settings in config/environments/* take precedence over those specified here.
     # Application configuration should go into files in config/initializers
     # -- all .rb files in that directory are automatically loaded.
